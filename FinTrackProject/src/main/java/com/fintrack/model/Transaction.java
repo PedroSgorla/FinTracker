@@ -42,11 +42,12 @@ public class Transaction {
     }
 
     public String getType(){
-        return "Regular: ";
+        return "Regular ";
     }
 
-    public String tostring() {
+    @Override
+    public String toString() {
         String sign = isIncome ? "+" : "-";
-        return String.format("[%s] %s | %s%.2f | %s", getType(), getDescription(), sign, amount, isIncome);
+        return String.format("[%s] %s | %s%.2f | %s", getType(), getDescription(), sign, amount, date);
     }
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fintrack.exceptions.InvalidInputException;
+
 public class FinTracker {
 
     private List<Transaction> transactions = new ArrayList<>();
@@ -21,7 +22,7 @@ public class FinTracker {
         System.out.println("Transaction added successfully!");
     }
 
-    public void getTransactions() {
+    public void listTransactions() {
         if(transactions.isEmpty()){
             System.out.println("No transactions found!");
         }
@@ -53,5 +54,9 @@ public class FinTracker {
             }
         }
         return total;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }
