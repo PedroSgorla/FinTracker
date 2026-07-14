@@ -21,6 +21,6 @@ public class MonthlyTransaction extends Transaction {
 
     @Override
     public String getType() {
-        return "Monthly ";
+        return "Monthly";
     }
 }

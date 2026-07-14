@@ -87,7 +87,8 @@ public class Menu {
 
     public static void showBalance(){
         double balance = finTracker.calculateTotalBalance();
-        System.out.printf("Current balance: %.2f%n" + balance);
+        System.out.println("\n================= BALANCE =================");
+        System.out.printf("\nCurrent balance: %.2f%n", balance);
     }
 
     public static void removeTransaction(){

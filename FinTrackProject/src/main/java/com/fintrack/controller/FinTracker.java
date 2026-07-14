@@ -26,13 +26,13 @@ public class FinTracker {
         if(transactions.isEmpty()){
             System.out.println("No transactions found!");
         }
-        System.out.println("\n========= TRANSACTIONS =========");
+        System.out.println("\n====================== TRANSACTIONS ======================\n");
         int index = 1;
         for(Transaction transaction : transactions){
             System.out.println(index + ". " + transaction);
             index++;
         }
-        System.out.println("\n========= END OF TRANSACTIONS =========");
+        System.out.println("\n====================== END OF TRANSACTIONS ======================\n");
     }
 
     public void removeTransaction(int index) throws InvalidInputException {
@@ -40,7 +40,7 @@ public class FinTracker {
             throw new InvalidInputException("Invalid index: " + index);
         }
         Transaction removed =  transactions.remove(index - 1 );
-        System.out.println("Transaction removed: "  + removed.getDescription());
+        System.out.println("Transaction removed: "  + removed.getDescription() + " and this value is " + String.format("%.2f",removed.getAmount()));
     }
 
     public double calculateTotalBalance(){

@@ -1,6 +1,7 @@
 package com.fintrack.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
 
@@ -42,12 +43,13 @@ public class Transaction {
     }
 
     public String getType(){
-        return "Regular ";
+        return "Regular";
     }
 
     @Override
     public String toString() {
         String sign = isIncome ? "+" : "-";
-        return String.format("[%s] %s | %s%.2f | %s", getType(), getDescription(), sign, amount, date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return String.format("[%s] %s | %s%.2f | %s", getType(), getDescription(), sign, amount, date.format(formatter));
     }
 }
