@@ -4,6 +4,7 @@ import com.fintrack.controller.FinTracker;
 import com.fintrack.exceptions.InvalidInputException;
 import com.fintrack.model.MonthlyTransaction;
 import com.fintrack.model.Transaction;
+import com.fintrack.utils.Formatter;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -13,13 +14,14 @@ public class Menu {
     private static FinTracker finTracker = new FinTracker();
     private static Scanner input = new Scanner(System.in);
 
-    public static void main( String[] args ) {
+    public static void main(String[] args ) {
         int option = 0;
 
-        while(option != 5){
+        while(option != 7){
             printMenu();
             try{
                 option = Integer.parseInt(input.nextLine());
+
                 handleOption(option);
             }
             catch(NumberFormatException e){
@@ -28,28 +30,32 @@ public class Menu {
         }
     }
 
-    public static void printMenu(){
+    private static void printMenu(){
         System.out.println("\n=============== FINTRACK - YOUR PERSONAL FINANCIAL CONTROL =============");
         System.out.println("1. Add Transaction");
         System.out.println("2. View Transactions");
         System.out.println("3. Show current balance");
         System.out.println("4. Remove Transaction");
-        System.out.println("5. Exit");
+        System.out.println("5. Search Transaction");
+        System.out.println("6. Filter by type(Income / Expenses / Monthly transactions)");
+        System.out.println("7. Exit");
         System.out.print("Choose an option: ");
     }
 
-    public static void handleOption(int option){
+    private static void handleOption(int option){
         switch(option){
             case 1 -> addTransaction();
             case 2 -> finTracker.listTransactions();
             case 3 -> showBalance();
             case 4 -> removeTransaction();
-            case 5 -> System.out.println("Goodbye!");
+            case 5 -> searchTransaction();
+            case 6 -> filterTransactions();
+            case 7 -> System.out.println("Goodbye!");
             default ->  System.out.println("Invalid option! Choose again!");
         }
     }
 
-    public static void addTransaction(){
+    private static void addTransaction(){
         try{
             System.out.print("Description: ");
             String description = input.nextLine();
@@ -85,12 +91,12 @@ public class Menu {
         }
     }
 
-    public static void showBalance(){
+    private static void showBalance(){
         double balance = finTracker.calculateTotalBalance();
-        System.out.printf("Current balance: %.2f%n" + balance);
+        System.out.println("Current balance: " + Formatter.formatAmount(balance));
     }
 
-    public static void removeTransaction(){
+    private static void removeTransaction(){
         finTracker.listTransactions();
         if(finTracker.getTransactions().isEmpty()){
             return;
@@ -105,6 +111,33 @@ public class Menu {
         }
         catch (InvalidInputException e){
             System.out.println("Error: " + e.getMessage() + "! Please try again!");
+        }
+    }
+
+    private static void searchTransaction(){
+        System.out.print("keyword to search: ");
+        String keyword = input.nextLine();
+        finTracker.searchTransaction(keyword);
+    }
+
+    private static void filterTransactions(){
+        System.out.println("Show only: ");
+        System.out.println("1. Income Transaction");
+        System.out.println("2. Expenses Transaction");
+        System.out.println("3. Monthly Transaction");
+        System.out.print("Choose an option: ");
+
+        try{
+            int option = Integer.parseInt(input.nextLine());
+            switch(option){
+                case 1 -> finTracker.filterByType(true);
+                case 2 -> finTracker.filterByType(false);
+                case 3 -> finTracker.filterByMonthly();
+                default -> System.out.println("Invalid option! Choose again!");
+            }
+        }
+        catch (NumberFormatException e){
+            System.out.println("Invalid number entered! Please try again!");
         }
     }
 }

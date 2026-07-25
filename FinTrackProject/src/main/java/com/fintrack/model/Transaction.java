@@ -1,6 +1,7 @@
 package com.fintrack.model;
 
 import java.time.LocalDate;
+import com.fintrack.utils.Formatter;
 
 public class Transaction {
 
@@ -28,10 +29,10 @@ public class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    public boolean getIsIncome() {
+    public boolean isIncome() {
         return isIncome;
     }
-    public void setIsIncome(boolean isIncome) {
+    public void isIncome(boolean isIncome) {
         this.isIncome = isIncome;
     }
     public LocalDate getDate() {
@@ -42,12 +43,16 @@ public class Transaction {
     }
 
     public String getType(){
-        return "Regular ";
+        return "Regular";
     }
 
     @Override
     public String toString() {
-        String sign = isIncome ? "+" : "-";
-        return String.format("[%s] %s | %s%.2f | %s", getType(), getDescription(), sign, amount, date);
+        return String.format("[%s] %s | %s%s | %s",
+                getType(),
+                description,
+                Formatter.formatSign(isIncome),
+                Formatter.formatAmount(amount),
+                Formatter.formatDate(date));
     }
 }
