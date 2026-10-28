@@ -14,21 +14,28 @@ A simple console-based personal finance tracker written in Java. FinTrack lets y
 ## Project Structure
 
 ```
-FinTrackProject/
-├── pom.xml
-└── src/main/java/com/fintrack/
-    ├── app/
-    │   └── Menu.java                 # Console entry point / menu loop
-    ├── controller/
-    │   └── FinTracker.java           # Core logic: add, remove, list, search, filter, totals
-    ├── model/
-    │   ├── Transaction.java          # Base transaction (description, amount, income flag, date)
-    │   └── MonthlyTransaction.java   # Recurring transaction (adds day-of-month)
-    ├── exceptions/
-    │   └── InvalidInputException.java
-    └── utils/
-        └── Formatter.java           # Date, amount, and sign formatting helpers
+FinTracker/
+├── pom.xml                           # Maven build configuration
+├── README.md
+├── .gitignore
+└── src/
+    └── main/
+        └── java/
+            └── com/fintrack/
+                ├── app/
+                │   └── Menu.java                 # Console entry point / menu loop
+                ├── controller/
+                │   └── FinTracker.java           # Core logic: add, remove, list, search, filter, totals
+                ├── model/
+                │   ├── Transaction.java          # Base transaction (description, amount, income flag, date)
+                │   └── MonthlyTransaction.java   # Recurring transaction (adds day-of-month)
+                ├── exceptions/
+                │   └── InvalidInputException.java
+                └── utils/
+                    └── Formatter.java            # Date, amount, and sign formatting helpers
 ```
+
+The repository root is the Maven project: `pom.xml` and `src/` live at the top level.
 
 ## Requirements
 
@@ -37,7 +44,7 @@ FinTrackProject/
 
 ## Build & Run
 
-From the `FinTrackProject` directory:
+From the repository root (the folder that contains `pom.xml`):
 
 ```bash
 mvn compile

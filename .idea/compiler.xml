@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FinTrackProject" />
+        <module name="FinTrack" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="FinTrackProject" target="25" />
+    </bytecodeTargetLevel>
   </component>
 </project>
