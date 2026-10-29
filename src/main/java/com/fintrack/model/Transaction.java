@@ -8,19 +8,19 @@ public class Transaction {
     private Long id;
     private String description;
     private double amount;
-    private boolean isIncome;
+    private boolean income;
     private LocalDate date;
 
-    public Transaction(String description, double amount, boolean isIncome, LocalDate date) {
+    public Transaction(String description, double amount, boolean income, LocalDate date) {
         this.description = description;
         this.amount = amount;
-        this.isIncome = isIncome;
+        this.income = income;
         this.date = date;
     }
     public Long getId(){return id; }
 
-    public void setId(Long id){ this.id = id}
-    
+    public void setId(Long id){ this.id = id; }
+
     public String getDescription() {
         return description;
     }
@@ -38,11 +38,11 @@ public class Transaction {
     }
 
     public boolean isIncome() {
-        return isIncome;
+        return income;
     }
 
-    public void isIncome(boolean isIncome) {
-        this.isIncome = isIncome;
+    public void setIncome(boolean income) {
+        this.income = income;
     }
 
     public LocalDate getDate() {
@@ -62,7 +62,7 @@ public class Transaction {
         return String.format("[%s] %s | %s%s | %s",
                 getType(),
                 description,
-                Formatter.formatSign(isIncome),
+                Formatter.formatSign(income),
                 Formatter.formatAmount(amount),
                 Formatter.formatDate(date));
     }
