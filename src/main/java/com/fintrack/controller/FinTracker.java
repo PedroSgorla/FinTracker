@@ -3,37 +3,52 @@ package com.fintrack.controller;
 import com.fintrack.exceptions.InvalidInputException;
 import com.fintrack.model.Transaction;
 import com.fintrack.model.TransactionType;
+import com.fintrack.repository.Repository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public class FinTracker {
 
-    private final List<Transaction> transactions = new ArrayList<>();
+    private final Repository<Transaction, Long> repository;
 
-    public void addTransaction(Transaction transaction) {
-        Objects.requireNonNull(transaction, "Transaction cannot be null");
-        transactions.add(transaction);
+    public FinTracker(Repository<Transaction, Long> repository) {
+        this.repository = Objects.requireNonNull(repository, "Repository cannot be null");
     }
 
-    public Transaction removeTransaction(int index) {
-        if (index < 1 || index > transactions.size()) {
-            throw new InvalidInputException("Invalid index: " + index);
+    public Transaction addTransaction(Transaction transaction) {
+        Objects.requireNonNull(transaction, "Transaction cannot be null");
+        return repository.save(transaction);
+    }
+
+    public Transaction updateTransaction(Transaction transaction) {
+        Objects.requireNonNull(transaction, "Transaction cannot be null");
+        if (transaction.getId() == null) {
+            throw new InvalidInputException("Transaction has not been saved yet!");
         }
-        return transactions.remove(index - 1);
+        return repository.save(transaction);
+    }
+
+    public void removeTransaction(Long id) {
+        if (!repository.deleteById(id)) {
+            throw new InvalidInputException("No transaction with id " + id);
+        }
+    }
+
+    public List<Transaction> getTransactions() {
+        return repository.findAll();
     }
 
     public List<Transaction> filterByType(boolean income) {
-        return transactions.stream()
+        return getTransactions().stream()
                 .filter(transaction -> transaction.isIncome() == income)
                 .toList();
     }
 
     public List<Transaction> filterByMonthly() {
-        return transactions.stream()
+        return getTransactions().stream()
                 .filter(transaction -> transaction.getType() == TransactionType.MONTHLY)
                 .toList();
     }
@@ -43,7 +58,7 @@ public class FinTracker {
             throw new InvalidInputException("Keyword cannot be empty!");
         }
         String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
-        return transactions.stream()
+        return getTransactions().stream()
                 .filter(transaction -> transaction.getDescription()
                         .toLowerCase(Locale.ROOT)
                         .contains(normalizedKeyword))
@@ -51,25 +66,24 @@ public class FinTracker {
     }
 
     public BigDecimal calculateTotalIncome() {
-        return transactions.stream()
+        return getTransactions().stream()
                 .filter(Transaction::isIncome)
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-
     public BigDecimal calculateTotalExpenses() {
-        return transactions.stream()
+        return getTransactions().stream()
                 .filter(transaction -> !transaction.isIncome())
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public BigDecimal calculateTotalBalance() {
-        return calculateTotalIncome().subtract(calculateTotalExpenses());
-    }
-
-    public List<Transaction> getTransactions() {
-        return List.copyOf(transactions);
+        return getTransactions().stream()
+                .map(transaction -> transaction.isIncome()
+                        ? transaction.getAmount()
+                        : transaction.getAmount().negate())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
