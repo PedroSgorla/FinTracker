@@ -1,5 +1,6 @@
 package com.fintrack.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fintrack.exceptions.InvalidInputException;
@@ -9,11 +10,11 @@ public class Transaction {
 
     private Long id;
     private String description;
-    private double amount;
+    private BigDecimal amount;
     private boolean income;
     private LocalDate date;
 
-    public Transaction(String description, double amount, boolean income, LocalDate date) {
+    public Transaction(String description, BigDecimal amount, boolean income, LocalDate date) {
         this.description = requireDescription(description);
         this.amount = requireAmount(amount);
         this.income = income;
@@ -31,11 +32,11 @@ public class Transaction {
         this.description = requireDescription(description);
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = requireAmount(amount);
     }
 
@@ -76,7 +77,7 @@ public class Transaction {
         return description.trim();
     }
 
-    private static double requireAmount(double amount) {
+    private static double requireAmount(BigDecimal amount) {
         if (amount <= 0) {
             throw new InvalidInputException("Amount must be greater than 0!");
         }

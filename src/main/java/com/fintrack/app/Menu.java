@@ -6,28 +6,16 @@ import com.fintrack.model.MonthlyTransaction;
 import com.fintrack.model.Transaction;
 import com.fintrack.utils.Formatter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-/**
- * Console entry point for the FinTrack application. Presents a text menu
- * that lets the user add, view, remove, search, and filter transactions,
- * and view their current balance.
- */
 public class Menu {
 
-    /** Controller used to manage the tracked transactions. */
     private static FinTracker finTracker = new FinTracker();
 
-    /** Scanner used to read user input from the console. */
     private static Scanner input = new Scanner(System.in);
 
-    /**
-     * Application entry point. Repeatedly prints the menu and handles the
-     * chosen option until the user selects "Exit".
-     *
-     * @param args command-line arguments (unused)
-     */
     public static void main(String[] args ) {
         int option = 0;
 
@@ -44,9 +32,6 @@ public class Menu {
         }
     }
 
-    /**
-     * Prints the main menu options to the console.
-     */
     private static void printMenu(){
         System.out.println("\n=============== FINTRACK - YOUR PERSONAL FINANCIAL CONTROL =============");
         System.out.println("1. Add Transaction");
@@ -59,11 +44,6 @@ public class Menu {
         System.out.print("Choose an option: ");
     }
 
-    /**
-     * Dispatches to the appropriate handler based on the chosen menu option.
-     *
-     * @param option the selected menu option (1-7)
-     */
     private static void handleOption(int option){
         switch(option){
             case 1 -> addTransaction();
@@ -77,17 +57,13 @@ public class Menu {
         }
     }
 
-    /**
-     * Prompts the user for transaction details, builds either a regular or
-     * monthly {@link Transaction}, and adds it via the controller.
-     */
     private static void addTransaction(){
         try{
             System.out.print("Description: ");
             String description = input.nextLine();
 
             System.out.print("Amount: ");
-            double amount = Double.parseDouble(input.nextLine());
+            BigDecimal amount = new BigDecimal(input.nextLine());
 
             System.out.print("Is it an income?(y/n): ");
             boolean isIncome = input.nextLine().equalsIgnoreCase("y");
@@ -117,18 +93,11 @@ public class Menu {
         }
     }
 
-    /**
-     * Prints the current total balance to the console.
-     */
     private static void showBalance(){
-        double balance = finTracker.calculateTotalBalance();
+        BigDecimal balance = finTracker.calculateTotalBalance();
         System.out.println("Current balance: " + Formatter.formatAmount(balance));
     }
 
-    /**
-     * Lists current transactions, then prompts the user for the position of
-     * the one to remove and deletes it.
-     */
     private static void removeTransaction(){
         finTracker.listTransactions();
         if(finTracker.getTransactions().isEmpty()){
@@ -147,19 +116,12 @@ public class Menu {
         }
     }
 
-    /**
-     * Prompts the user for a keyword and prints matching transactions.
-     */
     private static void searchTransaction(){
         System.out.print("keyword to search: ");
         String keyword = input.nextLine();
         finTracker.searchTransaction(keyword);
     }
 
-    /**
-     * Prompts the user to choose a transaction type (income, expenses, or
-     * monthly) and prints the matching transactions.
-     */
     private static void filterTransactions(){
         System.out.println("Show only: ");
         System.out.println("1. Income Transaction");
