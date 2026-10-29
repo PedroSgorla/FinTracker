@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+
+<GridPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.fintrack.ui.TransactionFormController"
+          hgap="12" vgap="14" styleClass="form-pane">
+
+    <padding>
+        <Insets top="22" right="26" bottom="22" left="26"/>
+    </padding>
+
+    <fx:define>
+        <ToggleGroup fx:id="kindGroup"/>
+    </fx:define>
+
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT" minWidth="90"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="300"/>
+    </columnConstraints>
+
+    <Label text="Description" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+    <TextField fx:id="descriptionField" promptText="e.g. Supermarket"
+               GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+    <Label text="Amount" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="amountField" promptText="e.g. 150.50"
+               GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+    <Label text="Date" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <DatePicker fx:id="datePicker" maxWidth="Infinity"
+                GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+    <Label text="Kind" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <HBox spacing="20" alignment="CENTER_LEFT" GridPane.rowIndex="3" GridPane.columnIndex="1">
+        <RadioButton fx:id="incomeRadio" text="Income" toggleGroup="$kindGroup"/>
+        <RadioButton fx:id="expenseRadio" text="Expense" toggleGroup="$kindGroup" selected="true"/>
+    </HBox>
+
+    <Label text="Recurrence" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="4" GridPane.columnIndex="1">
+        <CheckBox fx:id="monthlyCheckBox" text="Monthly, on day"/>
+        <ComboBox fx:id="dayComboBox" prefWidth="80"/>
+    </HBox>
+
+    <Label fx:id="errorLabel" styleClass="error-label" wrapText="true" maxWidth="Infinity"
+           GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT"
+          GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2">
+        <Button text="Cancel" cancelButton="true" onAction="#onCancel"/>
+        <Button text="Save" defaultButton="true" onAction="#onSave" styleClass="primary"/>
+    </HBox>
+
+</GridPane>

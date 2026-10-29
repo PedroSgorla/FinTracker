@@ -1,0 +1,112 @@
+/* ===== Base ===== */
+.root-pane {
+    -fx-background-color: #f4f6f9;
+    -fx-font-size: 14px;
+}
+
+.form-pane {
+    -fx-background-color: white;
+    -fx-font-size: 14px;
+}
+
+.title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2d3d;
+}
+
+/* ===== Header and footer bars ===== */
+.header {
+    -fx-background-color: white;
+    -fx-border-color: #e2e6ec;
+    -fx-border-width: 0 0 1 0;
+}
+
+.summary-bar {
+    -fx-background-color: white;
+    -fx-border-color: #e2e6ec;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* ===== Buttons ===== */
+.button {
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 6 14 6 14;
+}
+
+.button.primary {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+}
+
+.button.primary:hover {
+    -fx-background-color: #1d4ed8;
+}
+
+.button.danger {
+    -fx-background-color: #fee2e2;
+    -fx-text-fill: #b91c1c;
+}
+
+.button.danger:hover {
+    -fx-background-color: #fecaca;
+}
+
+/* ===== Table ===== */
+.table-view {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e2e6ec;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #eef1f6;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #2563eb;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: white;
+}
+
+/* ===== Amounts ===== */
+.income-amount {
+    -fx-text-fill: #15803d;
+    -fx-font-weight: bold;
+}
+
+.expense-amount {
+    -fx-text-fill: #b91c1c;
+    -fx-font-weight: bold;
+}
+
+.table-cell.income-amount,
+.table-cell.expense-amount {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+.table-row-cell:selected .table-cell.income-amount,
+.table-row-cell:selected .table-cell.expense-amount {
+    -fx-text-fill: white;
+}
+
+.balance-text {
+    -fx-font-weight: bold;
+}
+
+/* ===== Forms ===== */
+.error-label {
+    -fx-text-fill: #b91c1c;
+}
+
+/* ===== Chart ===== */
+.chart-bar.default-color0 {
+    -fx-bar-fill: #2e9e5b;
+}
+
+.chart-bar.default-color1 {
+    -fx-bar-fill: #d64545;
+}
