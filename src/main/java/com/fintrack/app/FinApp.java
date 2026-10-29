@@ -11,19 +11,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-/**
- * JavaFX entry point of FinTrack. Wires the application together:
- * database access ({@link TransactionDAO}), business logic ({@link FinTracker})
- * and the main window.
- */
 public class FinApp extends Application {
 
-    /**
-     * Builds the object graph, loads the main window and shows it.
-     *
-     * @param stage the primary window provided by JavaFX
-     * @throws IOException if the FXML file cannot be loaded
-     */
     @Override
     public void start(Stage stage) throws IOException {
         FinTracker finTracker = new FinTracker(new TransactionDAO());
@@ -43,11 +32,6 @@ public class FinApp extends Application {
         stage.show();
     }
 
-    /**
-     * Starts the JavaFX runtime.
-     *
-     * @param args command-line arguments (unused)
-     */
     public static void main(String[] args) {
         launch(args);
     }

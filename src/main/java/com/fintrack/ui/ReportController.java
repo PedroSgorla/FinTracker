@@ -16,11 +16,20 @@ public class ReportController {
 
     private final FinTracker finTracker;
 
-    @FXML private Label countLabel;
-    @FXML private Label incomeLabel;
-    @FXML private Label expensesLabel;
-    @FXML private Label balanceLabel;
-    @FXML private BarChart<String, Number> barChart;
+    @FXML
+    private Label countLabel;
+
+    @FXML
+    private Label incomeLabel;
+
+    @FXML
+    private Label expensesLabel;
+
+    @FXML
+    private Label balanceLabel;
+
+    @FXML
+    private BarChart<String, Number> barChart;
 
     public ReportController(FinTracker finTracker) {
         this.finTracker = Objects.requireNonNull(finTracker);

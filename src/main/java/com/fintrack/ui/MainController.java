@@ -53,18 +53,41 @@ public class MainController {
 
     private final FinTracker finTracker;
 
-    @FXML private TextField searchField;
-    @FXML private ComboBox<Filter> filterComboBox;
-    @FXML private Button editButton;
-    @FXML private Button deleteButton;
-    @FXML private TableView<Transaction> transactionTable;
-    @FXML private TableColumn<Transaction, LocalDate> dateColumn;
-    @FXML private TableColumn<Transaction, String> descriptionColumn;
-    @FXML private TableColumn<Transaction, String> typeColumn;
-    @FXML private TableColumn<Transaction, BigDecimal> amountColumn;
-    @FXML private Label incomeLabel;
-    @FXML private Label expensesLabel;
-    @FXML private Label balanceLabel;
+    @FXML
+    private TextField searchField;
+
+    @FXML
+    private ComboBox<Filter> filterComboBox;
+
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private TableView<Transaction> transactionTable;
+
+    @FXML
+    private TableColumn<Transaction, LocalDate> dateColumn;
+
+    @FXML
+    private TableColumn<Transaction, String> descriptionColumn;
+
+    @FXML
+    private TableColumn<Transaction, String> typeColumn;
+
+    @FXML
+    private TableColumn<Transaction, BigDecimal> amountColumn;
+
+    @FXML
+    private Label incomeLabel;
+
+    @FXML
+    private Label expensesLabel;
+
+    @FXML
+    private Label balanceLabel;
 
     public MainController(FinTracker finTracker) {
         this.finTracker = Objects.requireNonNull(finTracker);

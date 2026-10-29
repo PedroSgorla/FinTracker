@@ -25,14 +25,29 @@ public class TransactionFormController {
 
     private final Transaction editing;
 
-    @FXML private TextField descriptionField;
-    @FXML private TextField amountField;
-    @FXML private DatePicker datePicker;
-    @FXML private RadioButton incomeRadio;
-    @FXML private RadioButton expenseRadio;
-    @FXML private CheckBox monthlyCheckBox;
-    @FXML private ComboBox<Integer> dayComboBox;
-    @FXML private Label errorLabel;
+    @FXML
+    private TextField descriptionField;
+
+    @FXML
+    private TextField amountField;
+
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private RadioButton incomeRadio;
+
+    @FXML
+    private RadioButton expenseRadio;
+
+    @FXML
+    private CheckBox monthlyCheckBox;
+
+    @FXML
+    private ComboBox<Integer> dayComboBox;
+
+    @FXML
+    private Label errorLabel;
 
     public TransactionFormController(FinTracker finTracker, Transaction editing) {
         this.finTracker = Objects.requireNonNull(finTracker);
