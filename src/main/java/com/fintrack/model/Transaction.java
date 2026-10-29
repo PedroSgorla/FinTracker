@@ -1,139 +1,97 @@
 package com.fintrack.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+
+import com.fintrack.exceptions.InvalidInputException;
 import com.fintrack.utils.Formatter;
 
-/**
- * Represents a single regular financial transaction (income or expense).
- * <p>
- * Serves as the base class for more specific transaction types, such as
- * {@link MonthlyTransaction}.
- */
-public class Transaction {
+public class Transaction implements Identifiable<Long>{
 
-    /** Free-text description of the transaction. */
+    private Long id;
     private String description;
-
-    /** Monetary value of the transaction. Expected to be greater than 0. */
-    private double amount;
-
-    /** {@code true} if this transaction is income, {@code false} if it is an expense. */
-    private boolean isIncome;
-
-    /** Date on which the transaction occurred. */
+    private BigDecimal amount;
+    private boolean income;
     private LocalDate date;
 
-    /**
-     * Creates a new regular transaction.
-     *
-     * @param description free-text description of the transaction
-     * @param amount monetary value of the transaction
-     * @param isIncome {@code true} if income, {@code false} if expense
-     * @param date date the transaction occurred
-     */
-    public Transaction(String description, double amount, boolean isIncome, LocalDate date) {
-        this.description = description;
-        this.amount = amount;
-        this.isIncome = isIncome;
-        this.date = date;
+    public Transaction(String description, BigDecimal amount, boolean income, LocalDate date) {
+        this.description = requireDescription(description);
+        this.amount = requireAmount(amount);
+        this.income = income;
+        this.date = requireDate(date);
     }
 
-    /**
-     * Returns the transaction description.
-     *
-     * @return the description
-     */
+    @Override
+    public Long getId(){return id; }
+
+    @Override
+    public void setId(Long id){ this.id = id; }
+
     public String getDescription() {
         return description;
     }
 
-    /**
-     * Updates the transaction description.
-     *
-     * @param description the new description
-     */
     public void setDescription(String description) {
-        this.description = description;
+        this.description = requireDescription(description);
     }
 
-    /**
-     * Returns the transaction amount.
-     *
-     * @return the amount
-     */
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    /**
-     * Updates the transaction amount.
-     *
-     * @param amount the new amount
-     */
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = requireAmount(amount);
     }
 
-    /**
-     * Indicates whether this transaction is income.
-     *
-     * @return {@code true} if income, {@code false} if expense
-     */
     public boolean isIncome() {
-        return isIncome;
+        return income;
     }
 
-    /**
-     * Updates whether this transaction is income.
-     *
-     * @param isIncome {@code true} if income, {@code false} if expense
-     */
-    public void isIncome(boolean isIncome) {
-        this.isIncome = isIncome;
+    public void setIncome(boolean income) {
+        this.income = income;
     }
 
-    /**
-     * Returns the date the transaction occurred.
-     *
-     * @return the transaction date
-     */
     public LocalDate getDate() {
         return date;
     }
 
-    /**
-     * Updates the date the transaction occurred.
-     *
-     * @param date the new transaction date
-     */
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.date = requireDate(date);
     }
 
-    /**
-     * Returns the type label of this transaction.
-     * <p>
-     * Subclasses override this to identify themselves (e.g. "Monthly").
-     *
-     * @return the type label, {@code "Regular"} for this base class
-     */
-    public String getType(){
-        return "Regular";
+    public TransactionType getType(){
+        return TransactionType.REGULAR;
     }
 
-    /**
-     * Returns a human-readable representation of this transaction, including
-     * its type, description, signed amount, and formatted date.
-     *
-     * @return the formatted string representation
-     */
     @Override
     public String toString() {
         return String.format("[%s] %s | %s%s | %s",
                 getType(),
                 description,
-                Formatter.formatSign(isIncome),
+                Formatter.formatSign(income),
                 Formatter.formatAmount(amount),
                 Formatter.formatDate(date));
+    }
+
+    private static String requireDescription(String description) {
+        if (description == null || description.isBlank()) {
+            throw new InvalidInputException("Description cannot be empty!");
+        }
+        return description.trim();
+    }
+
+    private static BigDecimal requireAmount(BigDecimal amount) {
+        if (amount == null || amount.signum() <= 0) {
+            throw new InvalidInputException("Amount must be greater than 0!");
+        }
+        return amount.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private static LocalDate requireDate(LocalDate date) {
+        if (date == null) {
+            throw new InvalidInputException("Date cannot be null!");
+        }
+        return date;
     }
 }
