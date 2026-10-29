@@ -2,13 +2,14 @@ package com.fintrack.model;
 
 import com.fintrack.exceptions.InvalidInputException;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class MonthlyTransaction extends Transaction {
 
     private int dayOfMonth;
 
-    public MonthlyTransaction(String description, double amount, boolean isIncome, LocalDate date, int dayOfMonth) throws InvalidInputException {
+    public MonthlyTransaction(String description, BigDecimal amount, boolean isIncome, LocalDate date, int dayOfMonth) throws InvalidInputException {
         super(description, amount, isIncome, date);
         this.dayOfMonth = requireDayOfMonth(dayOfMonth);
     }

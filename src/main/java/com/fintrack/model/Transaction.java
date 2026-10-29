@@ -77,7 +77,7 @@ public class Transaction {
         return description.trim();
     }
 
-    private static double requireAmount(BigDecimal amount) {
+    private static BigDecimal requireAmount(BigDecimal amount) {
         if (amount <= 0) {
             throw new InvalidInputException("Amount must be greater than 0!");
         }
