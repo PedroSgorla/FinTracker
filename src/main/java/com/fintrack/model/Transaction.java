@@ -1,6 +1,8 @@
 package com.fintrack.model;
 
 import java.time.LocalDate;
+
+import com.fintrack.exceptions.InvalidInputException;
 import com.fintrack.utils.Formatter;
 
 public class Transaction {
@@ -12,10 +14,10 @@ public class Transaction {
     private LocalDate date;
 
     public Transaction(String description, double amount, boolean income, LocalDate date) {
-        this.description = description;
-        this.amount = amount;
+        this.description = requireDescription(description);
+        this.amount = requireAmount(amount);
         this.income = income;
-        this.date = date;
+        this.date = requireDate(date);
     }
     public Long getId(){return id; }
 
@@ -26,7 +28,7 @@ public class Transaction {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = requireDescription(description);
     }
 
     public double getAmount() {
@@ -34,7 +36,7 @@ public class Transaction {
     }
 
     public void setAmount(double amount) {
-        this.amount = amount;
+        this.amount = requireAmount(amount);
     }
 
     public boolean isIncome() {
@@ -50,7 +52,7 @@ public class Transaction {
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.date = requireDate(date);
     }
 
     public TransactionType getType(){
@@ -65,5 +67,26 @@ public class Transaction {
                 Formatter.formatSign(income),
                 Formatter.formatAmount(amount),
                 Formatter.formatDate(date));
+    }
+
+    private static String requireDescription(String description) {
+        if (description == null || description.isBlank()) {
+            throw new InvalidInputException("Description cannot be empty!");
+        }
+        return description.trim();
+    }
+
+    private static double requireAmount(double amount) {
+        if (amount <= 0) {
+            throw new InvalidInputException("Amount must be greater than 0!");
+        }
+        return amount;
+    }
+
+    private static LocalDate requireDate(LocalDate date) {
+        if (date == null) {
+            throw new InvalidInputException("Date cannot be null!");
+        }
+        return date;
     }
 }

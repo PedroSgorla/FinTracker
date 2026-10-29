@@ -10,11 +10,7 @@ public class MonthlyTransaction extends Transaction {
 
     public MonthlyTransaction(String description, double amount, boolean isIncome, LocalDate date, int dayOfMonth) throws InvalidInputException {
         super(description, amount, isIncome, date);
-        if (dayOfMonth < 1 || dayOfMonth > 31) {
-            throw new InvalidInputException("Invalid day of Month. Day must be between 1 and 31!");
-        }
-        this.dayOfMonth = dayOfMonth;
-
+        this.dayOfMonth = requireDayOfMonth(dayOfMonth);
     }
 
     public int getDayOfMonth() {
@@ -22,11 +18,18 @@ public class MonthlyTransaction extends Transaction {
     }
 
     public void setDayOfMonth(int dayOfMonth) {
-        this.dayOfMonth = dayOfMonth;
+        this.dayOfMonth = requireDayOfMonth(dayOfMonth);
     }
 
     @Override
     public TransactionType getType() {
         return TransactionType.MONTHLY;
+    }
+
+    private static int requireDayOfMonth(int dayOfMonth) {
+        if (dayOfMonth < 1 || dayOfMonth > 31) {
+            throw new InvalidInputException("Invalid day of month. Day must be between 1 and 31!");
+        }
+        return dayOfMonth;
     }
 }
