@@ -1,6 +1,7 @@
 package com.fintrack.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import com.fintrack.exceptions.InvalidInputException;
@@ -78,10 +79,10 @@ public class Transaction {
     }
 
     private static BigDecimal requireAmount(BigDecimal amount) {
-        if (amount <= 0) {
+        if (amount == null || amount.signum() <= 0) {
             throw new InvalidInputException("Amount must be greater than 0!");
         }
-        return amount;
+        return amount.setScale(2, RoundingMode.HALF_UP);
     }
 
     private static LocalDate requireDate(LocalDate date) {
