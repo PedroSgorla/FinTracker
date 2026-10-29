@@ -144,7 +144,7 @@ public class TransactionDAO implements Repository<Transaction, Long> {
             statement.setNull(6, Types.TINYINT);
         }
     }
-    
+
     private Transaction mapRow(ResultSet resultSet) throws SQLException {
         String description = resultSet.getString("description");
         BigDecimal amount = resultSet.getBigDecimal("amount");
