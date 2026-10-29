@@ -1,5 +1,6 @@
 package com.fintrack.repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,24 @@ public interface Repository<T,ID>{
      */
     boolean deleteById(ID id);
 
+    /**
+     * Saves every entity of the given collection.
+     *
+     * @param entities the entities to save; may contain subtypes of {@code T}
+     */
+    default void saveAll(Collection<? extends T> entities) {
+        for (T entity : entities) {
+            save(entity);
+        }
+    }
 
+    /**
+     * Adds all stored entities to the given collection.
+     *
+     * @param target the collection to fill; may hold supertypes of {@code T}
+     */
+    default void findAllInto(Collection<? super T> target) {
+        target.addAll(findAll());
+    }
 }
 

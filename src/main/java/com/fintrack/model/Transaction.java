@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import com.fintrack.exceptions.InvalidInputException;
 import com.fintrack.utils.Formatter;
 
-public class Transaction {
+public class Transaction implements Identifiable<Long>{
 
     private Long id;
     private String description;
@@ -21,8 +21,11 @@ public class Transaction {
         this.income = income;
         this.date = requireDate(date);
     }
+
+    @Override
     public Long getId(){return id; }
 
+    @Override
     public void setId(Long id){ this.id = id; }
 
     public String getDescription() {
